@@ -1,0 +1,39 @@
+﻿@page "/livros"
+@inject ILivroService livroService
+
+@if (Livro == null)
+{
+    <ExibirSpinner />
+}
+else
+{   
+    @if (Livro.Count() > 0)
+    {
+        var livrosPorCategoria = from item in Livro
+                                 group item by item.CategoriaId into livroPorCategoriaGrupo
+                                 orderby livroPorCategoriaGrupo.Key
+                                 select livroPorCategoriaGrupo;        
+
+        @foreach (var livroGrupo in livrosPorCategoria)
+        {
+            <h4 style="text-align: center;">@livroGrupo.FirstOrDefault(lg => lg.CategoriaId == livroGrupo.Key).CategoriaNome</h4>
+
+
+            <div class="livros" style="display:flex; flex-wrap: wrap; justify-content: left; align-items: center; margin: 2em auto;">
+                <ExibirLivros Livros="@livroGrupo"></ExibirLivros>
+            </div>
+
+            <hr class="mb-2" />
+        }
+    }
+}
+
+@code {
+    public IEnumerable<LivroDto>? Livro { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Livro = await livroService.GetLivros();
+    }
+    
+}

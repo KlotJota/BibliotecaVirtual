@@ -1,0 +1,37 @@
+﻿@if (CategoriasDto == null && MensagemErro == null)
+{
+    <ExibirSpinner />
+}
+else if (MensagemErro != null)
+{
+    <ExibirErro MensagemErro="@MensagemErro" />
+}
+else
+{
+    @foreach(var categoria in CategoriasDto)
+    {
+        var link = "/LivrosPorCategoria/" + categoria.Id;
+        <li><a href="@link">@categoria.Nome</a></li>
+    }
+}
+
+@code {
+    [Inject]
+    public ILivroService? LivroService { get; set; }
+
+    public IEnumerable<CategoriaDto>? CategoriasDto{ get; set; }
+
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            CategoriasDto = await LivroService.GetCategorias();
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
+}

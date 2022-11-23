@@ -1,0 +1,27 @@
+﻿body {
+}
+
+.img {
+    position: relative;
+    left: 100px;
+    top: 40px;
+    border-radius: 10px;
+}
+
+    .img:hover {
+        transform: scale(1.1, 1.1);
+    }
+
+.lv {
+    position: relative;
+    border-left: 1px solid black;
+    height: 200px;
+    left: 440px;
+    bottom: 380px;
+}
+
+.info {
+    position: relative;
+    left: 500px;
+    bottom: 250px;
+}

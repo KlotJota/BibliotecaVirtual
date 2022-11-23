@@ -1,0 +1,104 @@
+﻿@font-face {
+    font-family: 'Poppins';
+    src: url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap")
+}
+
+ul,
+li,
+p {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    font-size: 1.5rem;
+    font-family: Poppins;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.header {
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(24,24,24,1) 27%, rgba(34,34,34,1) 56%, rgba(41,41,41,1) 99%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+}
+
+.dp-menu ul {
+    padding: 0;
+    position: relative;
+}
+
+    .dp-menu ul li {
+        margin-left: 27px;
+        display: inline-block;
+        position: relative;
+    }
+
+        .dp-menu ul li:hover {
+            transform: scale(1.1, 1.1);
+        }
+
+    /* sub menu */
+    .dp-menu ul ul {
+        display: none;
+        position: absolute;
+        background: rgba(34,34,34,1) 56%;
+        border-radius: 5px;
+        box-shadow: 0 15px 35px 1px black;
+    }
+
+    .dp-menu ul li:hover ul {
+        display:block;
+    }
+
+    .dp-menu ul ul {
+        width: 150px;
+    }
+
+        .dp-menu ul ul li {
+            right: 15px;
+            font-size: 20px;
+            padding: 2px;
+            margin-top: 10px;
+        }
+
+            .dp-menu ul ul li:hover {
+                transform: scale(1.1, 1.1);
+            }
+
+            .dp-menu ul ul li a {
+                display: block;
+            }
+
+input {
+    position: relative;
+    right: 35px;
+}
+
+button {
+    position: relative;
+    left: 190px;
+    bottom: 38px;
+}
+
+.cesta {
+    position: relative;
+    right: 430px;
+}
+
+    .cesta button {
+        border-radius: 10px;
+        width: 80px;
+        height: 40px;
+        border-color: black;
+        background-color: #EFEFEF;
+    }
+
+        .cesta button:hover {
+            background-color: gray;
+            transform: scale(1.1, 1.1);
+        }

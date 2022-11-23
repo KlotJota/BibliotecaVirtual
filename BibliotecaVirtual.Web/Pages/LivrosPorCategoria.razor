@@ -1,0 +1,57 @@
+﻿@page "/LivrosPorCategoria/{CategoriaId:int}"
+
+@if (LivrosDto is null && MensagemErro is null)
+{
+    <ExibirSpinner />
+}
+else if (MensagemErro is not null)
+{
+    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+}
+else
+{   
+    <br />
+    <h3 style="text-align:center;">Livros de @NomeCategoria</h3>
+    <hr />
+
+    @if (LivrosDto.Count() > 0)
+    {
+        <div>
+            <ExibirLivros Livros="@LivrosDto"></ExibirLivros>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public int CategoriaId { get; set; }
+
+    [Inject]
+    public ILivroService? LivroService { get; set; }
+
+    public IEnumerable<LivroDto>? LivrosDto{ get; set; }
+
+    public string? NomeCategoria { get; set; }
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            LivrosDto = await LivroService.GetLivrosPorCategoria(CategoriaId);
+
+            if(LivrosDto != null && LivrosDto.Count() > 0)
+            {
+                var livroDto = LivrosDto.FirstOrDefault(l => l.CategoriaId == CategoriaId);
+                if (livroDto != null)
+                {
+                    NomeCategoria = livroDto.CategoriaNome;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
+}

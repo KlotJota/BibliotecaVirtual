@@ -1,0 +1,45 @@
+﻿@foreach (var item in Livros)
+{
+    <section class="flex">	
+		<div id="container">
+
+			<div class="product-details">
+
+				<h1>@item.NomeLivro</h1>
+
+				<p class="information">@item.Descricao</p>
+
+				<div class="control">
+					<a href="/LivroDetalhes/@item.Id">
+						<button class="btn">
+							<span class="seta-direita"><i class="fa-solid fa-circle-arrow-right" aria-hidden="true"></i></span>
+							<span class="ver">Ver mais</span>
+						</button>
+					</a>
+
+				</div>
+
+			</div>
+
+			<div class="product-image">
+				<img src="@item.ImagemUrl" alt="@item.NomeLivro">
+
+				<div class="info">
+					<h2> Descrição </h2>
+					<ul>
+						<li><strong>Autor(a): </strong> @item.Autor </li>
+						<li><strong>Quantidade de páginas: </strong>@item.QtdPaginas</li>
+						<li><strong>Editora: </strong>@item.Editora</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+}
+
+
+
+@code {
+    [Parameter]
+    public IEnumerable<LivroDto>? Livros { get; set; }
+}
