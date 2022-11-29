@@ -3,6 +3,7 @@
     public class FavoritoLivro
     {
         public int Id { get; set; }
+        public int Quantidade { get; set; }
 
         public int FavoritoId { get; set; }
         public Favorito? Favoritos { get; set; }

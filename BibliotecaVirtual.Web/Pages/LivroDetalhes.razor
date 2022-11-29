@@ -1,42 +1,123 @@
 ﻿@page "/LivroDetalhes/{Id:int}"
 
-@if (Livro is null && MensagemErro is null)
+@inject LoginContainer login
+
+@if (login.Logado == true)
 {
-    <ExibirSpinner />
-}
-else if (MensagemErro is not null)
-{
-    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
-}
-else
-{
-    <div class="row">
-        <div class="col-md-6 mb-4">
-            <img class="img" src="@Livro.ImagemUrl">
-        </div>
-        <div class="info">
-            <h3>@Livro.NomeLivro</h3>
-            <h5>@Livro.Autor</h5>
-            <br>
-            <p class="mb-4">@Livro.Descricao</p>
-            <p class="mb-4"></p>
-            <p classclass="mb-4">@Livro.Quantidade livros disponíveis</p>
+    @if (Livro is null && MensagemErro is null)
+    {
+        <ExibirSpinner />
+    }
+    else if (MensagemErro is not null)
+    {
+        <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+    }
+    else
+    {
+        <div class="row">
             <div>
-                <button class="btn btn-warning">
-                    Adicionar aos favoritos
-                </button>
-                <button class="btn btn-sucess" 
-                    @onclick="() => AdicionarALocacao_Click(new LocacaoAdicionaLivroDto{
-                        LocacaoId = AlunoLogado.LocacaoId,
-                        LivroId = Livro.Id,
-                        Quantidade = 1
-                    })">
-                    Adicionar ao carrinho
-                </button>
+                <img class="img" src="@Livro.ImagemUrl">
+            </div>
+            <div class="info">
+                <h3>@Livro.NomeLivro</h3>
+                <h5>@Livro.Autor</h5>
+                <h6>@Livro.QtdPaginas páginas</h6>
+                <h6>Editora @Livro.Editora</h6>
+                <br>
+                <p class="desc">@Livro.Descricao</p>
+                <p class="mb-4"></p>
+                <p class="mb-4">@Livro.Quantidade livros disponíveis</p>
+                <div>
+                    @if(login.IsAdmin == false)
+                    {
+                        <button class="star"
+                            @onclick="() => AdicionarAosFavoritos_Click(new FavoritoAdicionaLivroDto{
+                                FavoritoId = login.IdUser,
+                                LivroId = Livro.Id,
+                                Quantidade = 1
+                            })">
+                            <i class="fa-regular fa-star"></i>
+                        </button>
+                        <button class="cesta" 
+                            @onclick="() => AdicionarALocacao_Click(new LocacaoAdicionaLivroDto{
+                                LocacaoId = login.IdUser,
+                                LivroId = Livro.Id,
+                                Quantidade = 1
+                            })">
+                            Alugar livro
+                        </button>
+                    }
+                    @if(login.IsAdmin == true)
+                    {
+                        <button class="atualizar" @onclick="MostrarCriar"><strong>Atualizar</strong></button>
+                    }
+
+                    @if (CriarAMostra)
+                    {
+                        <div class="backgroundPopupBox">
+                            <div class="popupCreate">
+                                <EditForm Model=@Livro OnValidSubmit="Update">
+                                    <DataAnnotationsValidator />
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <button class="sair" @onclick="Sair"><i class="fa-solid fa-x"></i></button>
+                                    <div class="form-group">
+                                        <label class="control-label">Nome</label>
+                                        <input type="text" @bind="Livro.NomeLivro" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Descrição</label>
+                                        <textarea @bind="Livro.Descricao" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Autor</label>
+                                        <input type="text" @bind="Livro.Autor" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Quantidade</label>
+                                        <input type="number" @bind="Livro.Quantidade" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Quantidade de páginas</label>
+                                        <input type="number" @bind="Livro.QtdPaginas" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Editora</label>
+                                        <input type="text" @bind="Livro.Editora" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Imagem</label>
+                                        <input type="text" @bind="Livro.ImagemUrl" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Categoria Id</label>
+                                        <input type="number" @bind="Livro.CategoriaId" class="form-control" />
+                                        <span class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="atualizarLivro"><strong>Atualizar</strong></button>
+                                    </div>
+                                    <ValidationSummary />
+                                </EditForm>
+                            </div>
+                        </div>
+                    }
+                    @if (login.IsAdmin == true)
+                    {
+                        <button @onclick="(() => DeleteLivro_Click(Livro.Id))" class="remover"><strong>Remover livro</strong></button>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    
+    }
+
 }
 
 @code {
@@ -44,6 +125,10 @@ else
     public ILivroService? LivroService { get; set; }
     [Inject]
     public ILocacaoService? LocacaoService { get; set; }
+    [Inject]
+    public IFavoritoService? FavoritoService { get; set; }
+
+
 
     [Inject]
     public NavigationManager? NavigationManager { get; set; } // navega de add ao carrinho para o carrinho em si
@@ -51,8 +136,12 @@ else
     [Parameter]
     public int Id { get; set; }
 
+    public List<LivroDto>? Livros { get; set; }
+
     public LivroDto? Livro { get; set; }
     public string? MensagemErro { get; set; }
+
+    bool CriarAMostra = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,8 +165,45 @@ else
         }
         catch (Exception)
         {
-            
+
             throw;
         }
+    }
+
+    protected async Task AdicionarAosFavoritos_Click(FavoritoAdicionaLivroDto favoritoAdicionaLivroDto)
+    {
+        try
+        {
+            // adicionará o livro escolhido à cesta
+            var favoritoLivroDto = await FavoritoService.AdicionaLivro(favoritoAdicionaLivroDto);
+            NavigationManager.NavigateTo("/favorito");
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    protected void DeleteLivro_Click(int id)
+    {
+        // excluirá o livro escolhido da cesta/ banco
+        LivroService.Delete(id);
+        NavigationManager.NavigateTo("/livros");
+    }
+
+    private void MostrarCriar()
+    {
+        CriarAMostra = true;
+    }
+
+    private void Sair()
+    {
+        CriarAMostra = false;
+    }
+
+    async Task Update()
+    {
+        var livro = await LivroService.Update(Livro);
     }
 }

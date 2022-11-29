@@ -21,9 +21,15 @@ builder.Services.AddDbContext<BDBiblioteca>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BDBib"));
 });
 
+// Auto Mapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Repositories
 builder.Services.AddScoped<ILivroRepository, LivroRepository>(); // cada requisição obtem uma nova instancia do serviço
 builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
 builder.Services.AddScoped<ILocacaoRepository, LocacaoRepository>();
+builder.Services.AddScoped<IFavoritoRepository, FavoritoRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 var app = builder.Build();
 

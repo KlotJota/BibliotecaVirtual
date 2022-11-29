@@ -1,70 +1,51 @@
 ﻿@page "/locacao"
 
-@if (LocacoesLivros == null && MensagemErro == null)
+@inject LoginContainer login
+
+@if (login.Logado == true && login.IsAdmin == false)
 {
-    <ExibirSpinner />
-}
-else if (MensagemErro != null)
-{
-    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
-}
-else
-{
-    <h3 class="mb-5" style="text-align:center;">Cesta de livros</h3>
-    @if (LocacoesLivros.Count() > 0)
+    @if (LocacoesLivros == null && MensagemErro == null)
     {
-        
-            
-                @foreach (var item in LocacoesLivros)
-                {
-                    <section class="flex">
-                        <div id="container">
-                            <div class="product-details">
-
-                                <h1>@item.LivroNome</h1>
-
-                                <p class="information">@item.LivroDescricao</p>
-
-                                <div class="control">
-                                    <a href="/LivroDetalhes/@item.LivroId">
-                                        <button class="btn">
-                                            <span class="seta-direita"><i class="fa-solid fa-circle-arrow-right" aria-hidden="true"></i></span>
-                                            <span class="ver">Ver mais</span>
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="product-image">
-                                <img src="@item.ImagemUrl" alt="@item.ImagemUrl">
-
-                                <div class="info">
-                                    <h2> Descrição </h2>
-                                    <ul>
-                                        <li><strong>Autor(a): </strong> @item.LivroAutor </li>
-                                        <li><strong>Quantidade de páginas: </strong>@item.LivroQtdPaginas</li>
-                                        <li><strong>Editora: </strong>@item.LivroEditora</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div>   
-                                <button @onclick="(() => DeleteLocacaoLivro_Click(item.Id))" class="remove">
-                                    X
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                }
-        /*<div>
-            <h2>@QtdTotal livros em sua cesta</h2>
-        </div>*/
+        <ExibirSpinner />
+    }
+    else if (MensagemErro != null)
+    {
+        <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
     }
     else
     {
-    <div>
-        <h3><strong>Poxa, seu carrinho de livros está vazio :(</strong></h3>
-    </div>
-    }        
+        <h3 class="mb-5" style="text-align:center;">Locações realizadas</h3>
+        @if (LocacoesLivros.Count() > 0)
+        {
+
+            <br>
+            <table id="locacoes">
+                <tr>
+                    <th>Nome</th>
+                    <th>Autor</th>
+                    <th>Editora</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in LocacoesLivros)
+                {
+                    <tr>
+                        <td>@item.LivroNome</td>
+                        <td>@item.LivroAutor</td>
+                        <td>@item.LivroEditora</td>
+                        <button @onclick="(() => DeleteLocacaoLivro_Click(item.Id))" class="remove">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+        <div>
+            <h3><strong>Você ainda não realizou nenhuma locação</strong></h3>
+        </div>
+        }        
+    }
 }
 
 @code {
@@ -81,7 +62,7 @@ else
     {
         try
         {
-            LocacoesLivros = await LocacaoService.GetLivros(AlunoLogado.AlunoId);
+            LocacoesLivros = await LocacaoService.GetLivros(login.IdUser.ToString());
         }
         catch (Exception ex)
         {
@@ -111,15 +92,5 @@ else
     {
         var locacaoLivroDto = GetLocacaoLivro(id);  // obtém o livro
         LocacoesLivros.Remove(locacaoLivroDto);     // remove
-    }
-
-    private void SetQtdTotal()
-    {
-        QtdTotal = LocacoesLivros.Sum(l => l.Quantidade);
-    }
-
-    private void CalculaQtdTotal()
-    {
-        SetQtdTotal();
     }
 }

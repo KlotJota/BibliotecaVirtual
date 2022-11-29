@@ -1,5 +1,6 @@
 ﻿using BibliotecaVirtual.Models.DTOs;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace BibliotecaVirtual.Web.Services
@@ -104,6 +105,54 @@ namespace BibliotecaVirtual.Web.Services
                     var mensagem = await response.Content.ReadAsStringAsync();
                     throw new Exception($"Status Code : {response.StatusCode} - {mensagem}");
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> Add(AdicionaLivroDto adicionaLivroDto) 
+        {
+                var resposta = await _httpClient
+                                .PostAsJsonAsync("api/livros",
+                                adicionaLivroDto);
+
+                return true;
+        }
+
+        public async Task<bool> Update(LivroDto livroDto)
+        {
+            try
+            {
+                var resposta = await _httpClient
+                                .PutAsJsonAsync("api/livros",
+                                livroDto);
+
+                if (resposta.IsSuccessStatusCode) // status entre 200 a 299
+                {
+                    return true;
+                }
+
+                else
+                {
+                    // serializa o conteúdo HTTP como string
+                    var mensagem = await resposta.Content.ReadAsStringAsync();
+                    throw new Exception($"{resposta.StatusCode} Mensagem - {mensagem}");
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void Delete(int id)
+        {
+            try
+            {
+                var resposta =  _httpClient.DeleteAsync($"api/livros/{id}");
             }
             catch (Exception)
             {

@@ -29,6 +29,8 @@
     position: relative;
     top: 5px;
     left: 35px;
+    height: 50px;
+    overflow: hidden;
 }
 
 #container .product-details > p {
@@ -38,8 +40,10 @@
     color: #7d7d7d;
     text-align: left;
     position: relative;
+    height: 80px;
     top: 8px;
     left: 47px;
+    overflow: auto;
 }
 
 .control {
@@ -125,7 +129,7 @@
     line-height: 1.8;
     text-align: left;
     font-size: 80%;
-    cursor: no-drop;
+    cursor: default;
     color: #FFF;
     height: 100%;
     width: 100%;

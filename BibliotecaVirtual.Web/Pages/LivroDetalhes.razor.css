@@ -6,6 +6,8 @@
     left: 100px;
     top: 40px;
     border-radius: 10px;
+    height: 300px;
+    width: 200px;
 }
 
     .img:hover {
@@ -24,4 +26,145 @@
     position: relative;
     left: 500px;
     bottom: 250px;
+}
+
+.row {
+    position: relative;
+}
+
+.row .info .desc {
+    width: 600px;
+    white-space: normal;
+    vertical-align: top;
+    display: inline-block;
+    line-break: auto;
+}
+
+.row .star {
+    border-left: 2px solid;
+    border-top: 2px solid;
+    border-right: none;
+    border-bottom: 2px solid;
+    border-color: #e6b800;
+    border-radius: 4px;
+
+    position: relative;
+    top: 1px;
+    padding: 6px;
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+    .row .star:hover {
+        background-image: linear-gradient(to right, #e6b800, transparent);
+    }
+
+.row .cesta {
+    border-left: none;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+
+    position: relative;
+    top: 1px;
+    right: 5px;
+    padding: 6px;
+}
+
+    .row .cesta:hover {
+        background-image: linear-gradient(to right, transparent, #b4b4b4);
+    }
+
+.row .atualizar {
+    position: relative;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    background: rgba(34, 34, 34, 0.84);
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.3px);
+    -webkit-backdrop-filter: blur(7.3px);
+    border: 1px solid rgba(34, 34, 34, 0.38);
+}
+
+    .row .atualizar:hover {
+        transform: scale(1.1)
+    }
+
+.row .remover {
+    position: relative;
+    left: 230px;
+    border-color: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .row .remover:hover {
+        background-color: #ff494b;
+        color: white;
+        transition-duration: 0.3s;
+    }
+
+.row .backgroundPopupBox .atualizarLivro {
+    position: relative;
+    top: 10px;
+    left: 100px;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+
+    background: rgba(34, 34, 34, 0.84);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.3px);
+    -webkit-backdrop-filter: blur(7.3px);
+    border: 1px solid rgba(34, 34, 34, 0.38);
+}
+
+    .row .backgroundPopupBox .atualizarLivro:hover {
+        transform: scale(1.1);
+    }
+
+.row .backgroundPopupBox .sair {
+    position: relative;
+    left: 325px;
+    bottom: 30px;
+    border: none;
+    background: none;
+    opacity: 40%;
+    border-radius: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+    .row .backgroundPopupBox .sair:hover {
+        opacity: 100%;
+    }
+
+
+.row .backgroundPopupBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.7)
+}
+
+.row .popupCreate {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 400px;
+    height: 640px;
+    padding: 40px;
+    border-radius: 20px;
 }

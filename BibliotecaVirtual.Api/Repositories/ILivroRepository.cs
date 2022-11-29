@@ -6,9 +6,18 @@ namespace BibliotecaVirtual.Api.Repositories
     {
         Task<IEnumerable<Livro>> GetLivros();
         Task<Livro> GetLivro(int id);
-
         Task<IEnumerable<Livro>> GetLivrosPorCategoria(int id);
         Task<IEnumerable<Categoria>> GetCategorias();
+
+        public void Add(Livro entity);
+
+        public void Update(Livro entity);
+
+        public void Delete(int Id);
+
+        Task<bool> SaveChangesAsync();
+
+        
 
     }
 

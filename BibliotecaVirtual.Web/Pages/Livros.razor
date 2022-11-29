@@ -1,39 +1,131 @@
 ﻿@page "/livros"
 @inject ILivroService livroService
+@inject LoginContainer loginContainer
 
-@if (Livro == null)
+@if (loginContainer.Logado == true)
 {
-    <ExibirSpinner />
-}
-else
-{   
-    @if (Livro.Count() > 0)
+    @if (Livro == null)
     {
-        var livrosPorCategoria = from item in Livro
-                                 group item by item.CategoriaId into livroPorCategoriaGrupo
-                                 orderby livroPorCategoriaGrupo.Key
-                                 select livroPorCategoriaGrupo;        
-
-        @foreach (var livroGrupo in livrosPorCategoria)
-        {
-            <h4 style="text-align: center;">@livroGrupo.FirstOrDefault(lg => lg.CategoriaId == livroGrupo.Key).CategoriaNome</h4>
-
-
-            <div class="livros" style="display:flex; flex-wrap: wrap; justify-content: left; align-items: center; margin: 2em auto;">
-                <ExibirLivros Livros="@livroGrupo"></ExibirLivros>
-            </div>
-
-            <hr class="mb-2" />
-        }
+        <ExibirSpinner />
     }
+    else
+    {
+        @if (Livro.Count() > 0)
+        {
+            var livrosPorCategoria = from item in Livro
+                                     group item by item.CategoriaId into livroPorCategoriaGrupo
+                                     orderby livroPorCategoriaGrupo.Key
+                                     select livroPorCategoriaGrupo;
+
+            @if (loginContainer.IsAdmin == true)
+            {
+                <button title="Adicionar livro" class="add" @onclick="MostrarCriar"><i class="fa-solid fa-plus"></i></button>
+            }
+
+                @if (CriarAMostra)
+                {
+                    <div class="backgroundPopupBox">
+                        <div class="popupCreate">
+                            <EditForm Model=@addLivro OnValidSubmit="Add">
+                                <DataAnnotationsValidator />
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <button class="sair" @onclick="Sair"><i class="fa-solid fa-x"></i></button>
+                                <div class="form-group">
+                                    <label class="control-label">Nome</label>
+                                    <input type="text" @bind="addLivro.NomeLivro" class="form-control" required />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Descrição</label>
+                                    <textarea @bind="addLivro.Descricao" class="form-control" required />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Autor</label>
+                                    <input type="text" @bind="addLivro.Autor" class="form-control" required />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Quantidade</label>
+                                    <input type="number" @bind="addLivro.Quantidade" class="form-control" required />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Quantidade de páginas</label>
+                                    <input type="number" @bind="addLivro.QtdPaginas" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Editora</label>
+                                    <input type="text" @bind="addLivro.Editora" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Imagem</label>
+                                    <input type="text" @bind="addLivro.ImagemUrl" class="form-control" />
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Categoria Id</label>
+                                    <input type="number" @bind="addLivro.CategoriaId" class="form-control" required />
+                                    <span class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                <button type="submit" class="adicionarLivro"><strong>Adicionar</strong></button>
+                                </div>
+                                <ValidationSummary />
+                            </EditForm>
+                        </div>
+                    </div>
+                }
+
+            @foreach (var livroGrupo in livrosPorCategoria)
+            {
+                <h4 style="text-align: center;">@livroGrupo.FirstOrDefault(lg => lg.CategoriaId == livroGrupo.Key).CategoriaNome</h4>
+
+
+                <div class="livros" style="display:flex; flex-wrap: wrap; justify-content: left; align-items: center; margin: 2em auto;">
+                    <ExibirLivros Livros="@livroGrupo"></ExibirLivros>
+                </div>
+
+                <hr style="height:1.5px;"/>
+            }
+
+        }
+
+    }
+
 }
 
 @code {
+
     public IEnumerable<LivroDto>? Livro { get; set; }
+
+    AdicionaLivroDto addLivro = new AdicionaLivroDto();
+
+
+    bool CriarAMostra = false;
 
     protected override async Task OnInitializedAsync()
     {
         Livro = await livroService.GetLivros();
     }
-    
+
+    private void MostrarCriar()
+    {
+        CriarAMostra = true;
+    }
+
+    private void Sair()
+    {
+        CriarAMostra = false;
+    }
+
+    async Task Add()
+    {
+        var livro = await livroService.Add(addLivro);
+        
+    }
+
 }

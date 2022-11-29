@@ -24,7 +24,7 @@ namespace BibliotecaVirtual.Web.Services
             }
             catch (Exception)
             {
-                _logger.LogError("Erro ao acessar os livros: api/alunos");
+                _logger.LogError("Erro ao acessar os alunos: api/alunos");
                 throw;
             }
         }

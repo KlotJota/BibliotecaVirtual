@@ -1,4 +1,6 @@
-﻿using BibliotecaVirtual.Api.Mappings;
+﻿using AutoMapper;
+using BibliotecaVirtual.Api.Entities;
+using BibliotecaVirtual.Api.Mappings;
 using BibliotecaVirtual.Api.Repositories;
 using BibliotecaVirtual.Models.DTOs;
 using Microsoft.AspNetCore.Http;
@@ -12,57 +14,47 @@ namespace BibliotecaVirtual.Api.Controllers
     public class LivrosController : ControllerBase
     {
         private readonly ILivroRepository _livroRepository;
+        private readonly IMapper _mapper;
 
-        public LivrosController(ILivroRepository livroRepository)
+        public LivrosController(ILivroRepository livroRepository, IMapper mapper)
         {
             _livroRepository = livroRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LivroDto>>> GetLivros()
+        public async Task<ActionResult<LivroDto>> GetLivros()
         {
             try
             {
                 var livros = await _livroRepository.GetLivros();
-
                 if (livros == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var livroDtos = livros.ConverterLivrosParaDto();
-                    return Ok(livroDtos);
-                }
-            }
-            catch(Exception)
-            {
-                return  StatusCode(StatusCodes.Status500InternalServerError,
-                        "Erro ao acessar o servidor interno");
-            }
-        }
-
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<IEnumerable<LivroDto>>> GetLivro(int id)
-        {
-            try
-            {
-                var livro = await _livroRepository.GetLivro(id);
-                if (livro == null)
-                {
-                    return NotFound("Erro ao localizar o livro informado");
-                }
-                else
-                {
-                    var livroDto = livro.ConverterLivroParaDto();
-                    return Ok(livroDto);
+                    var livrosDtos = livros.ConverterLivrosParaDto();
+                    return Ok(livrosDtos);
                 }
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                        "Erro ao acessar o servidor interno");
+                "Erro ao acessar o servidor interno");
             }
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetLivro(int id)
+        {
+            var livro = await _livroRepository.GetLivro(id);
+
+            var livroRetorno = _mapper.Map<LivroDto>(livro);
+
+            return livroRetorno != null
+                                ? Ok(livroRetorno)
+                                : BadRequest("Livro não encontrado");
         }
 
         [HttpGet]
@@ -98,6 +90,45 @@ namespace BibliotecaVirtual.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                 "Erro ao acessar o servidor interno");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(AdicionaLivroDto livro)
+        {
+            if (livro == null) return BadRequest("Dados de livro inválidos");
+
+            var livroAdiciona = _mapper.Map<Livro>(livro);
+
+            _livroRepository.Add(livroAdiciona);
+
+            return livroAdiciona.Id != null
+                ? Ok("Livro adicionado com sucesso")
+                : BadRequest("Erro ao adicionar o livro");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(LivroDto livro)
+        {
+            if (livro == null) return BadRequest("Livro não informado");
+             
+            var livroAtualizar = _mapper.Map<Livro>(livro);
+
+            _livroRepository.Update(livroAtualizar);
+
+            return livroAtualizar.Id != null
+                ? Ok("Livro atualizado com sucesso")
+                : BadRequest("Erro ao atualizar o livro");
+
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            if (Id <= 0) return BadRequest("Livro inválido");
+
+            _livroRepository.Delete(Id);
+
+            return Ok("Livro removido com sucesso");
         }
     }
 }

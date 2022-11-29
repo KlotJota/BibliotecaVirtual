@@ -1,6 +1,9 @@
 ﻿@page "/alunos"
 @inject IAlunoService alunoService
+@inject LoginContainer loginContainer
 
+@if (loginContainer.Logado == true && loginContainer.IsAdmin == true)
+{
     @if (Aluno == null)
     {
         <h3>Carregando alunos cadastrados...</h3>
@@ -9,35 +12,35 @@
     {
         @if (Aluno.Count() > 0)
         {
-            <div class="alunos">
-                <table class="table">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>Cpf</th>
-                            <th>Ra</th>
-                            <th>Telefone</th>
-                            <th>E-mail</th>
-                            <th>Curso</th>
-                        </tr>
-                    @foreach (var aluno in Aluno)
-                    {
-                     <tr>
-                         <td>@aluno.Id</td>
-                         <td>@aluno.Nome</td>
-                         <td>@aluno.Cpf</td>
-                         <td>@aluno.Ra</td>
-                         <td>@aluno.Telefone</td>
-                         <td>@aluno.Email</td>
-                         <td>@aluno.CursoNome</td>
-                     </tr>   
-                    }
-                </table>
-            </div>
+            <br>
+            <table id="alunos">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Cpf</th>
+                    <th>Ra</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th>Curso</th>
+                </tr>
+                @foreach (var aluno in Aluno)
+                {
+                    <tr>
+                        <td>@aluno.Id</td>
+                        <td>@aluno.Nome</td>
+                        <td>@aluno.Cpf</td>
+                        <td>@aluno.Ra</td>
+                        <td>@aluno.Telefone</td>
+                        <td>@aluno.Email</td>
+                        <td>@aluno.CursoNome</td>
+                    </tr>
+                }
+            </table>
         }
 
     }
 
+}
 
 
 
@@ -47,5 +50,5 @@
     protected override async Task OnInitializedAsync()
     {
         Aluno = await alunoService.GetAlunos();
-    }
+    }  
 }

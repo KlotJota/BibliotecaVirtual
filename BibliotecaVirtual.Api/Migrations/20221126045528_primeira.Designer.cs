@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BibliotecaVirtual.Api.Migrations
 {
     [DbContext(typeof(BDBiblioteca))]
-    [Migration("20221119034315_Setima")]
-    partial class Setima
+    [Migration("20221126045528_primeira")]
+    partial class primeira
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,19 +23,6 @@ namespace BibliotecaVirtual.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("BibliotecaVirtual.Api.Entities.Biblioteca", b =>
-                {
-                    b.Property<string>("Cnpj")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Acervo")
-                        .HasColumnType("int");
-
-                    b.HasKey("Cnpj");
-
-                    b.ToTable("Bibliotecas");
-                });
 
             modelBuilder.Entity("BibliotecaVirtual.Api.Entities.Categoria", b =>
                 {
@@ -114,8 +101,9 @@ namespace BibliotecaVirtual.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AlunoId")
-                        .HasColumnType("int");
+                    b.Property<string>("AlunoId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -125,12 +113,12 @@ namespace BibliotecaVirtual.Api.Migrations
                         new
                         {
                             Id = 1,
-                            AlunoId = 49
+                            AlunoId = "1"
                         },
                         new
                         {
                             Id = 2,
-                            AlunoId = 50
+                            AlunoId = "2"
                         });
                 });
 
@@ -146,6 +134,9 @@ namespace BibliotecaVirtual.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("LivroId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -206,48 +197,84 @@ namespace BibliotecaVirtual.Api.Migrations
                             Id = 1,
                             Autor = "Steven Spielberg",
                             CategoriaId = 1,
-                            Descricao = "Este livro é muito bom",
+                            Descricao = "O Codificador Limpo contém muitos conselhos pragmáticos que visam transformar o comportamento do profissional de software. O autor transmite valiosos ensinamentos sobre ética, respeito, responsabilidade, sinceridade e comprometimento, através de sua experiência como programador.",
                             Editora = "Nova",
                             ImagemUrl = "/Livros/livro1.png",
                             NomeLivro = "O Codificador Limpo",
                             QtdPaginas = 198,
-                            Quantidade = 0
+                            Quantidade = 5
                         },
                         new
                         {
                             Id = 2,
-                            Autor = "Ducatti",
-                            CategoriaId = 2,
-                            Descricao = "Este livro é muito bala foda pra porra",
+                            Autor = "Joao",
+                            CategoriaId = 1,
+                            Descricao = "Curso Intensivo de Python é uma introdução completa e em ritmo acelerado à linguagem Python, que fará você escrever programas, resolver problemas e criar soluções que funcionarão em um piscar de olhos",
                             Editora = "Velha",
                             ImagemUrl = "/Livros/livro2.png",
                             NomeLivro = "Curso Intensivo de Pyhton",
                             QtdPaginas = 120,
-                            Quantidade = 0
+                            Quantidade = 8
                         },
                         new
                         {
                             Id = 3,
-                            Autor = "Boisés Camilo",
-                            CategoriaId = 3,
-                            Descricao = "Este livro é muito grande Boisé quem o diga",
-                            Editora = "Boisés Inc.",
-                            ImagemUrl = "/Livros/livro3.png",
-                            NomeLivro = "Algoritmos e Lógica de Programação",
-                            QtdPaginas = 100,
-                            Quantidade = 0
+                            Autor = "Alexandre",
+                            CategoriaId = 1,
+                            Descricao = "Os conteúdos abordados em Lógica de Programação e Algoritmos são fundamentais a todos aqueles que desejam ingressar no universo da Programação de Computadores. Esses conteúdos, no geral, impõem algumas dificuldades aos iniciantes.",
+                            Editora = "Massa",
+                            ImagemUrl = "/Livros/livro5.jpg",
+                            NomeLivro = "Lógica de programação e algoritmos com JavaScript",
+                            QtdPaginas = 180,
+                            Quantidade = 4
                         },
                         new
                         {
                             Id = 4,
+                            Autor = "Boisés Camilo",
+                            CategoriaId = 2,
+                            Descricao = "Com linguagem simples e didática – sem, no entanto, fugir da complexidade do assunto –, o livro procura tornar prática a lógica de programação, além de mostrar aos estudantes um caminho mais adequado na construção dos algoritmos. ",
+                            Editora = "Boisés Inc.",
+                            ImagemUrl = "/Livros/livro3.png",
+                            NomeLivro = "Algoritmos e Lógica de Programação",
+                            QtdPaginas = 100,
+                            Quantidade = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Autor = "Carlito Teves",
+                            CategoriaId = 2,
+                            Descricao = "Contempla métodos de operações matemáticas, manipulação de cadeias de caracteres e conversão de tipos de dados. Aborda o conceito de métodos e pacotes, e os tipos de arranjos (unidimensional, bidimensional, com argumentos e de classe).",
+                            Editora = "Tadeu",
+                            ImagemUrl = "/Livros/livro6.png",
+                            NomeLivro = "JAVA 8 - Programação de computadores",
+                            QtdPaginas = 110,
+                            Quantidade = 5
+                        },
+                        new
+                        {
+                            Id = 6,
                             Autor = "Steven Spielberg",
                             CategoriaId = 3,
-                            Descricao = "Que que essa porra de livro ta fazendo aqui",
-                            Editora = "Casseta",
+                            Descricao = "Pet Sematary é um romance de terror escrito por Stephen King. Foi lançado em 1983.",
+                            Editora = "Massa",
                             ImagemUrl = "/Livros/livro4.png",
                             NomeLivro = "O Cemitério",
                             QtdPaginas = 160,
-                            Quantidade = 0
+                            Quantidade = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Autor = "Maria Almeida",
+                            CategoriaId = 3,
+                            Descricao = "Programação em C é um livro que ensina conceitos e ideias sobre a linguagem C",
+                            Editora = "Abóbora",
+                            ImagemUrl = "/Livros/livro7.jpg",
+                            NomeLivro = "Programação em C",
+                            QtdPaginas = 90,
+                            Quantidade = 2
                         });
                 });
 
@@ -340,6 +367,9 @@ namespace BibliotecaVirtual.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Telefone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -369,6 +399,7 @@ namespace BibliotecaVirtual.Api.Migrations
                             Email = "henrique@gmail.com",
                             Nome = "Henrique",
                             Senha = "churrasco12",
+                            Status = 1,
                             Telefone = "991726623"
                         });
                 });
@@ -396,6 +427,7 @@ namespace BibliotecaVirtual.Api.Migrations
                             Email = "artur@gmail.com",
                             Nome = "Artur",
                             Senha = "paodeakho",
+                            Status = 2,
                             Telefone = "991726623",
                             CursoId = 1,
                             Ra = "40028922"
@@ -407,6 +439,7 @@ namespace BibliotecaVirtual.Api.Migrations
                             Email = "zomboid@gmail.com",
                             Nome = "Zomboid",
                             Senha = "casseta15",
+                            Status = 2,
                             Telefone = "991212662",
                             CursoId = 2,
                             Ra = "912903001"
@@ -452,7 +485,7 @@ namespace BibliotecaVirtual.Api.Migrations
                         .IsRequired();
 
                     b.HasOne("BibliotecaVirtual.Api.Entities.Locacao", "Locacoes")
-                        .WithMany("LocacoesLivros")
+                        .WithMany("LocacaoLivros")
                         .HasForeignKey("LocacaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -512,7 +545,7 @@ namespace BibliotecaVirtual.Api.Migrations
 
             modelBuilder.Entity("BibliotecaVirtual.Api.Entities.Locacao", b =>
                 {
-                    b.Navigation("LocacoesLivros");
+                    b.Navigation("LocacaoLivros");
                 });
 #pragma warning restore 612, 618
         }

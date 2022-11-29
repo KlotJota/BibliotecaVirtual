@@ -1,30 +1,37 @@
 ﻿@inherits LayoutComponentBase
+@inject LoginContainer loginContainer
 
 <div class="page">
-    <header>
-        <div class="header">
-        <a href="/"><img src="/logo-branco.png" alt="logo" style="width:100px;"></a>
-        <nav class="dp-menu">
-            <ul>
-                    <li>
-                        <a href="livros">Livros <i class="fa-solid fa-caret-down"></i></a>
-                    <ul>
-                        <LivrosCategoria />
-                    </ul>
-                </li>
-                <li><a href="meus-livros">Locações</a></li>
-                <li><a href="favoritos">Favoritos</a></li>
-                <li><a href="locacao"><i class="fa-sharp fa-solid fa-basket-shopping"></i></a></li>
-            </ul>
-        </nav>
-        <form class="form-inline" style="position:relative; top:20px;right: 140px;">
-            <input class="form-control mr-sm-2" type="text" placeholder="Pesquisar" aria-label="Pesquisar">
-            <button class="btn btn-outline-secondary my-2 my-sm-0"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
-            <button class="apagar" title="Apagar"><i class="fa-solid fa-xmark"></i></button>
-            <button class="sair" title="Sair"><a href="/"><i class="fa-solid fa-right-from-bracket"></i></a></button>
-        </form>
-        </div> 
-    </header>
+    @if (loginContainer.Logado == true)
+    {
+        <header>
+            <div class="header">
+            <a href="livros"><img src="/logo-branco.png" alt="logo" style="width:100px;"></a>
+            <nav class="dp-menu">
+                <ul>
+                        <li>
+                            <a href="livros">Livros <i class="fa-solid fa-caret-down"></i></a>
+                        <ul>
+                            <LivrosCategoria />
+                        </ul>
+                    </li>
+                    @if (loginContainer.IsAdmin == false)
+                    {
+                        <li><a href="locacao">Locações</a></li>
+                        <li><a href="favorito">Favoritos</a></li>
+                    }
+                    @if (loginContainer.IsAdmin == true)
+                    {
+                        <li><a href="alunos">Alunos</a></li>
+                    }
+                </ul>
+            </nav>
+
+            <button style="position:relative; bottom:20px;left: 20px;" @onclick="Logout" class="sair" title="Sair"><a href="/"><i class="fa-solid fa-right-from-bracket"></i></a></button>
+
+            </div> 
+        </header>
+    }
 
     <main>
         <article class="content px-4">
@@ -33,5 +40,12 @@
     </main>
 </div>
 
+
 @code{
+    public NavigationManager? NavigationManager { get; set; }
+
+    public void Logout()
+    {
+        loginContainer.Logado = false;
+    } 
 }

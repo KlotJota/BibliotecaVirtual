@@ -1,5 +1,57 @@
-﻿@page "/"
+﻿@inject LoginContainer loginContainer
+@inject IUsuarioService usuarioService
 
-<h1>teste</h1>
+@page "/"
+
+<div class="background">
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="card2">
+                            <div class="card-body p-5 text-center">
+                                <EditForm Model=@loginDto OnSubmit=@CheckLogin class="mb-md-5 mt-md-4 pb-5">
+                                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                                    <ValidationSummary></ValidationSummary>
+                                    <h2 class="fw-bold mb-2">Faça o login em sua conta</h2>
+                                    <p class="text-black-50 mb-5">Por favor, insira seus dados</p>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input type="email" placeholder="Digite seu e-mail" class="form-control form-control-lg" @bind="email" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input type="password" placeholder="Digite sua senha" class="form-control form-control-lg" @bind="senha"/>
+                                    </div>
+                                    <button class="login" value="Entrar" type="submit">Login </button>
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@code {
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
+    public LoginDto loginDto = new LoginDto();
+    public string email { get; set; }
+    public string senha { get; set; }
+    public async void CheckLogin(){
+
+        loginContainer.Logado = await usuarioService.CheckLogin(email, senha);
+
+        if (await usuarioService.CheckLogin(email, senha))
+        {
+            NavigationManager.NavigateTo("/livros");
+        }
+    }
+
+}
 
 

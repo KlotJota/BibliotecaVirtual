@@ -75,7 +75,7 @@ namespace BibliotecaVirtual.Web.Services
                 if (resposta.IsSuccessStatusCode)
                 {
                     // caso não haja conteúdo no carrinho, retorna uma lista vazia
-                    if(resposta.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if (resposta.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         return Enumerable.Empty<LocacaoLivroDto>().ToList();
                     }

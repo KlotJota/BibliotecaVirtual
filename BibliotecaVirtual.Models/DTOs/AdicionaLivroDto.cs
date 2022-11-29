@@ -5,7 +5,7 @@ namespace BibliotecaVirtual.Models.DTOs
 {
     public class AdicionaLivroDto
     {
-        public string ImagemUrl { get; set; }
+        public string? ImagemUrl { get; set; }
         [Required]
         public string NomeLivro { get; set; }
         [Required]
@@ -18,6 +18,6 @@ namespace BibliotecaVirtual.Models.DTOs
         public string Editora { get; set; }
 
         public int CategoriaId { get; set; }
-        public string CategoriaNome { get; set; }
+       
     }
 }

@@ -1,0 +1,121 @@
+﻿@page "/favorito"
+
+@inject LoginContainer login
+
+@if (login.Logado == true && login.IsAdmin == false)
+{
+    @if (FavoritosLivros == null && MensagemErro == null)
+    {
+        <ExibirSpinner />
+    }
+    else if (MensagemErro != null)
+    {
+        <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+    }
+    else
+    {
+        <h3 class="mb-5" style="text-align:center;">Favoritos</h3>
+        @if (FavoritosLivros.Count() > 0)
+        {
+
+
+            @foreach (var item in FavoritosLivros)
+            {
+                <section class="flex">
+                    <div id="container">
+                        <div class="product-details">
+
+                            <h1>@item.LivroNome</h1>
+
+                            <p class="information">@item.LivroDescricao</p>
+
+                            <div class="control">
+                                <a href="/LivroDetalhes/@item.LivroId">
+                                    <button class="btn">
+                                        <span class="seta-direita"><i class="fa-solid fa-circle-arrow-right" aria-hidden="true"></i></span>
+                                        <span class="ver">Ver mais</span>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="product-image">
+                            <img src="@item.ImagemUrl" alt="@item.ImagemUrl">
+
+                            <div class="info">
+                                <h2> Descrição </h2>
+                                <ul>
+                                    <li><strong>Autor(a): </strong> @item.LivroAutor </li>
+                                    <li><strong>Quantidade de páginas: </strong>@item.LivroQtdPaginas</li>
+                                    <li><strong>Editora: </strong>@item.LivroEditora</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <button @onclick="(() => DeleteFavoritoLivro_Click(item.Id))" class="remove">
+                                X
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            }
+        }
+        else
+        {
+            <div>
+                <h3><strong>Poxa, você não tem favoritos :(</strong></h3>
+            </div>
+        }
+
+    }
+
+}    
+
+@code {
+
+    [Inject]
+    public IFavoritoService? FavoritoService { get; set; }
+
+    public List<FavoritoLivroDto>? FavoritosLivros { get; set; }
+
+    public string? MensagemErro { get; set; }
+
+    protected int QtdTotal { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            FavoritosLivros = await FavoritoService.GetLivros(login.IdUser.ToString());
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
+
+    protected async Task DeleteFavoritoLivro_Click(int id)
+    {
+        // excluirá o livro escolhido de favoritos/ banco
+        var favoritoLivroDto = await FavoritoService.DeletaLivro(id);
+
+        // remove o livro da coleção de livros (LocacoesLivros) da memoria no cliente
+        await RemoveFavoritoLivro(id);
+    }
+
+
+    // os seguintes métodos trabalham na memória, ao invés de uma nova interação com o BD, que teria um pior desempenho
+    // após a remoção, a interface é atualizada
+
+    private FavoritoLivroDto GetFavoritoLivro(int id)
+    {
+        return FavoritosLivros.FirstOrDefault(f => f.Id == id);
+    }
+
+    private async Task RemoveFavoritoLivro(int id)
+    {
+        var favoritoLivroDto = GetFavoritoLivro(id);  // obtém o livro
+        FavoritosLivros.Remove(favoritoLivroDto);     // remove
+    }
+
+}

@@ -8,6 +8,30 @@ namespace BibliotecaVirtual.Api.Repositories
     {
         private readonly BDBiblioteca _context;
 
+        public void Add(Livro entity)
+        {
+            _context.Livros.Add(entity);
+            _context.SaveChanges();
+        }
+
+        public void Update(Livro entity)
+        {
+            _context.Update(entity).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void Delete(int Id)
+        {
+            var entity = _context.Livros.Find(Id);
+            _context.Livros.Remove(entity);
+            _context.SaveChanges();
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public LivroRepository(BDBiblioteca context)
         {
             _context = context;

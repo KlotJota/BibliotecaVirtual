@@ -13,7 +13,8 @@ namespace BibliotecaVirtual.Api.Entities
         public string Senha { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
-       
+        public int Status { get; set; }
+
         public Locacao? Locacoes { get; set; }
         public Favorito? Favoritos { get; set; }
     }

@@ -1,0 +1,30 @@
+﻿body {
+
+}
+
+#alunos {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    #alunos td, #alunos th {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    #alunos tr:hover {
+        background-color: #ddd;
+    }
+
+    #alunos tr:nth-child(even) {
+        background-color: #E5E5E5;
+    }
+
+        #alunos tr:nth-child(even):hover {
+            background-color: #ddd;
+        }
+
+    #alunos th {
+        background-color: #464646;
+        color: white;
+    }

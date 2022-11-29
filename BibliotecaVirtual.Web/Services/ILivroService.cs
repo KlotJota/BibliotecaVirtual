@@ -9,5 +9,11 @@ namespace BibliotecaVirtual.Web.Services
 
         Task<IEnumerable<CategoriaDto>> GetCategorias();
         Task<IEnumerable<LivroDto>> GetLivrosPorCategoria(int categoriaId);
+
+        Task<bool> Add(AdicionaLivroDto adicionaLivroDto);
+
+        Task<bool> Update(LivroDto livroDto);
+
+        public void Delete(int id);
     }
 }

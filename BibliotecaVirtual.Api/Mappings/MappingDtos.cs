@@ -38,23 +38,7 @@ namespace BibliotecaVirtual.Api.Mappings
                     }).ToList();
         }
 
-        public static LivroDto ConverterLivroParaDto(this Livro livro)
-
-        {
-            return new LivroDto
-            {
-                Id = livro.Id,
-                ImagemUrl = livro.ImagemUrl,
-                NomeLivro = livro.NomeLivro,
-                Descricao = livro.Descricao,
-                Autor = livro.Autor,
-                Quantidade = livro.Quantidade,
-                QtdPaginas = livro.QtdPaginas,
-                Editora = livro.Editora,
-                CategoriaId = livro.Categorias.Id,
-                CategoriaNome = livro.Categorias.Nome
-            };
-        }
+        
 
         // Get para locações e livro
 
@@ -112,6 +96,7 @@ namespace BibliotecaVirtual.Api.Mappings
                         Id = favoritoLivro.Id,
                         FavoritoId = favoritoLivro.FavoritoId,
                         LivroId = favoritoLivro.LivroId,
+                        Quantidade = favoritoLivro.Quantidade,
 
                         ImagemUrl = livro.ImagemUrl,
                         LivroNome = livro.NomeLivro,
@@ -130,6 +115,7 @@ namespace BibliotecaVirtual.Api.Mappings
                 Id = favoritoLivro.Id,
                 FavoritoId = favoritoLivro.FavoritoId,
                 LivroId = favoritoLivro.LivroId,
+                Quantidade = favoritoLivro.Quantidade,
 
                 ImagemUrl = livro.ImagemUrl,
                 LivroNome = livro.NomeLivro,
@@ -189,6 +175,37 @@ namespace BibliotecaVirtual.Api.Mappings
                 CursoId = aluno.Cursos.Id,
                 CursoNome = aluno.Cursos.Nome,
                 CursoTurno = aluno.Cursos.Turno
+            };
+        }
+
+        // usuarios
+        public static IEnumerable<UsuarioDto> ConverterUsuariosParaDto(
+                                            this IEnumerable<Usuario> usuarios)
+
+        {
+            return (from usuario in usuarios
+                    select new UsuarioDto
+                    {
+                        Nome = usuario.Nome,
+                        Cpf = usuario.Cpf,
+                        Senha = usuario.Senha,
+                        Telefone =  usuario.Telefone,
+                        Email = usuario.Email,
+                        Status = usuario.Status
+                    }).ToList();
+        }
+
+        public static UsuarioDto ConverterUsuarioParaDto(this Usuario usuario)
+
+        {
+            return new UsuarioDto
+            {
+                Nome = usuario.Nome,
+                Cpf = usuario.Cpf,
+                Senha = usuario.Senha,
+                Telefone = usuario.Telefone,
+                Email = usuario.Email,
+                Status = usuario.Status
             };
         }
     }

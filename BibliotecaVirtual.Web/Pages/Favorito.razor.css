@@ -1,0 +1,191 @@
+﻿#container {
+    box-shadow: 0 15px 30px 1px grey;
+    background: linear-gradient(180deg, rgba(66, 66, 66, 0.15) 0%, rgba(66, 66, 66, 0.075) 100%);
+    text-align: center;
+    border-radius: 5px;
+    overflow: visible;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    height: 235px;
+    width: 470px;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-details {
+    position: relative;
+    overflow: visible;
+    padding: 5px;
+    height: 100%;
+    float: left;
+    width: 40%;
+}
+
+#container .product-details h1 {
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    font-size: 20px;
+    color: #344055;
+    margin: 0;
+    position: relative;
+    top: 5px;
+    left: 35px;
+}
+
+#container .product-details > p {
+    font-family: 'Poppins', serif;
+    text-align: center;
+    font-size: 18px;
+    color: #7d7d7d;
+    text-align: left;
+    position: relative;
+    height: 80px;
+    top: 8px;
+    left: 47px;
+    overflow: auto;
+}
+
+.control {
+    position: absolute;
+    bottom: 5%;
+    width: auto;
+    left: 28%;
+}
+
+.btn {
+    transform: translateY(0px);
+    transition: 0.3s linear;
+    background: #373434;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: #eee;
+    padding: 0;
+    margin: 0;
+}
+
+    .btn:hover {
+        transform: translateY(-6px);
+        background: #5F5B5B;
+    }
+
+    .btn span {
+        transition: transform 0.3s;
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .btn .price, .seta-direita {
+        background: #333;
+        border: 0;
+        margin: 0;
+    }
+
+    .btn .seta-direita {
+        transform: translateX(-100%);
+        position: absolute;
+        background: #858181;
+        z-index: 1;
+        left: 0;
+        top: 0;
+    }
+
+    .btn .ver {
+        z-index: 3;
+        font-weight: bolder;
+    }
+
+    .btn:hover .seta-direita {
+        transform: translateX(0%);
+    }
+
+.remove {
+    background: rgba(0, 0, 0, 0.24);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.5px);
+    -webkit-backdrop-filter: blur(4.5px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    left: 239px;
+    margin-bottom: 200px;
+    padding-top: 104px;
+    padding-bottom: 104px;
+    color: black;
+    box
+}
+
+    .remove:hover {
+        background: rgba(0, 0, 0, 0.62);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(4.5px);
+        -webkit-backdrop-filter: blur(4.5px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition-duration: 0.3s;
+        color: white;
+    }
+
+.product-image {
+    transition: all 0.3s ease-out;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    float: right;
+    width: 36%;
+}
+
+#container img {
+    width: 100%;
+    height: 100%;
+}
+
+.info {
+    background: rgba(27, 26, 26, 0.9);
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-out;
+    transform: translateX(-100%);
+    position: absolute;
+    line-height: 1.8;
+    text-align: left;
+    font-size: 80%;
+    cursor: no-drop;
+    color: #FFF;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+    .info h2 {
+        text-align: center;
+        font-size: 22px;
+    }
+
+.product-image:hover .info {
+    transform: translateX(0);
+}
+
+.info ul li {
+    transition: 0.3s ease;
+}
+
+    .info ul li:hover {
+        transform: translateX(10px) scale(1.1);
+    }
+
+.product-image:hover img {
+    transition: all 0.3s ease-out;
+}
+
+.product-image:hover img {
+    transform: scale(1.1, 1.1);
+}

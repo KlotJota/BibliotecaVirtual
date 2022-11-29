@@ -1,0 +1,76 @@
+﻿.add {
+    position: relative;
+    left: 50px;
+
+    background: #b4b4b4;
+    border-radius: 12px;
+    border: none;
+    padding: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+    .add:hover {
+        transform: scale(1.1);
+        content: "Adicionar-livro"
+    }
+
+.backgroundPopupBox .adicionarLivro {
+    position: relative;
+    top: 10px;
+    left: 100px;
+    background: rgba(34,34,34,1) 56%;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    background: rgba(34, 34, 34, 0.84);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.3px);
+    -webkit-backdrop-filter: blur(7.3px);
+    border: 1px solid rgba(34, 34, 34, 0.38);
+}
+
+
+    .backgroundPopupBox .adicionarLivro:hover {
+        transform: scale(1.1);
+    }
+
+.backgroundPopupBox .sair {
+    position: relative;
+    bottom: 30px;
+    left: 325px;
+    border: none;
+    background: none;
+    opacity: 40%;
+    border-radius: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+    .backgroundPopupBox .sair:hover {
+        opacity: 100%;
+    }
+
+.backgroundPopupBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.7)
+}
+
+.popupCreate {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 400px;
+    height: 640px;
+    padding: 40px;
+    border-radius: 20px;
+}

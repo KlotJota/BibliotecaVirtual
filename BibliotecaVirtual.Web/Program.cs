@@ -15,5 +15,9 @@ builder.Services.AddScoped(sp => new HttpClient
 builder.Services.AddScoped<ILivroService, LivroService>();
 builder.Services.AddScoped<IAlunoService, AlunoService>();
 builder.Services.AddScoped<ILocacaoService, LocacaoService>();
+builder.Services.AddScoped<IFavoritoService, FavoritoService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddSingleton<LoginContainer>();
 
 await builder.Build().RunAsync();
