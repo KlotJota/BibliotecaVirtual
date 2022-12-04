@@ -4,7 +4,7 @@
 
 namespace BibliotecaVirtual.Api.Migrations
 {
-    public partial class primeira : Migration
+    public partial class Primeira : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,7 +220,11 @@ namespace BibliotecaVirtual.Api.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Cpf", "Discriminator", "Email", "FavoritosId", "LocacoesId", "Nome", "Senha", "Status", "Telefone" },
-                values: new object[] { 3, "23232421", "Administrador", "henrique@gmail.com", null, null, "Henrique", "churrasco12", 1, "991726623" });
+                values: new object[,]
+                {
+                    { 3, "23232421", "Administrador", "matheus@gmail.com", null, null, "Matheus", "matheus123", 1, "991726623" },
+                    { 4, "23232421", "Administrador", "moises@gmail.com", null, null, "Moisés", "moises123", 1, "991726623" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Livros",
@@ -241,8 +245,8 @@ namespace BibliotecaVirtual.Api.Migrations
                 columns: new[] { "Id", "Cpf", "CursoId", "Discriminator", "Email", "FavoritosId", "LocacoesId", "Nome", "Ra", "Senha", "Status", "Telefone" },
                 values: new object[,]
                 {
-                    { 1, "33034799", 1, "Aluno", "artur@gmail.com", null, null, "Artur", "40028922", "paodeakho", 2, "991726623" },
-                    { 2, "91289123", 2, "Aluno", "zomboid@gmail.com", null, null, "Zomboid", "912903001", "casseta15", 2, "991212662" }
+                    { 1, "33034799", 1, "Aluno", "jonathan@gmail.com", null, null, "Jonathan", "40028922", "jonathan123", 2, "991726623" },
+                    { 2, "91289123", 2, "Aluno", "lucas@gmail.com", null, null, "Lucas", "912903001", "lucas123", 2, "991212662" }
                 });
 
             migrationBuilder.CreateIndex(

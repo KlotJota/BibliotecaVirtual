@@ -149,11 +149,11 @@ public class BDBiblioteca : DbContext
         modelBuilder.Entity<Aluno>().HasData(new Aluno
         {
             Id = 1,
-            Nome = "Artur",
+            Nome = "Jonathan",
             Cpf = "33034799",
-            Senha = "paodeakho",
+            Senha = "jonathan123",
             Telefone = "991726623",
-            Email = "artur@gmail.com",
+            Email = "jonathan@gmail.com",
             Ra = "40028922",
             CursoId = 1,
             Status = 2
@@ -162,11 +162,11 @@ public class BDBiblioteca : DbContext
         modelBuilder.Entity<Aluno>().HasData(new Aluno
         {
             Id = 2,
-            Nome = "Zomboid",
+            Nome = "Lucas",
             Cpf = "91289123",
-            Senha = "casseta15",
+            Senha = "lucas123",
             Telefone = "991212662",
-            Email = "zomboid@gmail.com",
+            Email = "lucas@gmail.com",
             Ra = "912903001",
             CursoId = 2,
             Status = 2
@@ -176,11 +176,23 @@ public class BDBiblioteca : DbContext
         modelBuilder.Entity<Administrador>().HasData(new Administrador
         {
             Id = 3,
-            Nome = "Henrique",
+            Nome = "Matheus",
             Cpf = "23232421",
-            Senha = "churrasco12",
+            Senha = "matheus123",
             Telefone = "991726623",
-            Email = "henrique@gmail.com",
+            Email = "matheus@gmail.com",
+            Status = 1
+        });
+
+        // Adicionar Administrador
+        modelBuilder.Entity<Administrador>().HasData(new Administrador
+        {
+            Id = 4,
+            Nome = "Moisés",
+            Cpf = "23232421",
+            Senha = "moises123",
+            Telefone = "991726623",
+            Email = "moises@gmail.com",
             Status = 1
         });
 

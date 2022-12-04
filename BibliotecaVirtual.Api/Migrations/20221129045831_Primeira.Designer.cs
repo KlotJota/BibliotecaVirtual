@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BibliotecaVirtual.Api.Migrations
 {
     [DbContext(typeof(BDBiblioteca))]
-    [Migration("20221126045528_primeira")]
-    partial class primeira
+    [Migration("20221129045831_Primeira")]
+    partial class Primeira
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -396,9 +396,19 @@ namespace BibliotecaVirtual.Api.Migrations
                         {
                             Id = 3,
                             Cpf = "23232421",
-                            Email = "henrique@gmail.com",
-                            Nome = "Henrique",
-                            Senha = "churrasco12",
+                            Email = "matheus@gmail.com",
+                            Nome = "Matheus",
+                            Senha = "matheus123",
+                            Status = 1,
+                            Telefone = "991726623"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Cpf = "23232421",
+                            Email = "moises@gmail.com",
+                            Nome = "Moisés",
+                            Senha = "moises123",
                             Status = 1,
                             Telefone = "991726623"
                         });
@@ -424,9 +434,9 @@ namespace BibliotecaVirtual.Api.Migrations
                         {
                             Id = 1,
                             Cpf = "33034799",
-                            Email = "artur@gmail.com",
-                            Nome = "Artur",
-                            Senha = "paodeakho",
+                            Email = "jonathan@gmail.com",
+                            Nome = "Jonathan",
+                            Senha = "jonathan123",
                             Status = 2,
                             Telefone = "991726623",
                             CursoId = 1,
@@ -436,9 +446,9 @@ namespace BibliotecaVirtual.Api.Migrations
                         {
                             Id = 2,
                             Cpf = "91289123",
-                            Email = "zomboid@gmail.com",
-                            Nome = "Zomboid",
-                            Senha = "casseta15",
+                            Email = "lucas@gmail.com",
+                            Nome = "Lucas",
+                            Senha = "lucas123",
                             Status = 2,
                             Telefone = "991212662",
                             CursoId = 2,
