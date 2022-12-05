@@ -82,6 +82,7 @@
 
             @foreach (var livroGrupo in livrosPorCategoria)
             {
+                <br />
                 <h4 style="text-align: center;">@livroGrupo.FirstOrDefault(lg => lg.CategoriaId == livroGrupo.Key).CategoriaNome</h4>
 
 
